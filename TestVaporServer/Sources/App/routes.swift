@@ -9,20 +9,15 @@ func routes(_ app: Application) throws {
         
         // 클라이언트가 연결될 때 호출
         print("Client connected. Total connected clients: \(connections.count)")
-
-        // 모든 클라이언트에게 메시지를 브로드캐스트하는 함수 정의
-        func broadcast(message: String, except ws: WebSocket) {
+        
+        // 클라이언트로부터 데이터를 수신할 때 호출
+        ws.onBinary { ws, data in
+            print("Received binary data of size: \(data.readableBytes)")
             connections.forEach { connection in
                 if connection !== ws {
-                    connection.send(message)
+                    connection.send(data)
                 }
             }
-        }
-
-        // 클라이언트로부터 메시지를 수신할 때 호출
-        ws.onText { ws, text in
-            print("Received message: \(text)")
-            broadcast(message: text, except: ws)
         }
 
         // 클라이언트가 연결을 종료할 때 호출
