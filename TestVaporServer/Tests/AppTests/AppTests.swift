@@ -26,4 +26,13 @@ struct AppTests {
             })
         }
     }
+    
+    @Test("intData test")
+    func intData() {
+        let count = 3
+        let countData = "\(count)".data(using: .utf8)
+        let decodeString = String(data: countData!, encoding: .utf8)
+        
+        #expect(decodeString == "3")
+    }
 }
