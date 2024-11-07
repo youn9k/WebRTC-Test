@@ -12,8 +12,8 @@ func routes(_ app: Application) throws {
         
         connections.forEach { connection in
             let count = connections.count
-            let countData = "\(count)".data(using: .utf8)
-            connection.send(countData ?? Data())
+            let countData = Data("\(count)".utf8)
+            connection.send(countData)
         }
         
         // 클라이언트로부터 데이터를 수신할 때 호출
