@@ -15,7 +15,7 @@ func routes(_ app: Application) throws {
             print("Received binary data of size: \(data.readableBytes)")
             connections.forEach { connection in
                 if connection !== ws {
-                    connection.send(data)
+                    connection.send("\(connections.count)")
                 }
             }
         }
