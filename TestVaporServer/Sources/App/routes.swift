@@ -29,6 +29,9 @@ func routes(_ app: Application) throws {
         // 클라이언트가 연결을 종료할 때 호출
         ws.onClose.whenComplete { _ in
             connections.removeAll { $0 === ws }
+            let count = connections.count
+            let countData = Data("\(count)".utf8)
+            connections.forEach { $0.send(countData) }
             print("Client disconnected. Total connected clients: \(connections.count)")
         }
     }
